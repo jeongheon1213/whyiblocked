@@ -1,15 +1,25 @@
 {
   "name": "whyiblocked",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron .",
+    "build": "electron-builder --win portable"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "electron": "^39.2.4"
+    "electron": "^39.2.4",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.example.whyiblocked",
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
   }
 }

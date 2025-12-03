@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Scraper Console</title>
+    <style>
+        :root {
+            --bg: radial-gradient(circle at 20% 20%, #101928, #070b12 60%);
+            --card: rgba(255, 255, 255, 0.04);
+            --accent: #5ff2c8;
+            --accent-2: #8ab4ff;
+            --text: #e7ecf5;
+            --muted: #9fb0cc;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Fira Sans", "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .frame {
+            width: min(960px, 100%);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            padding: 0;
+            background: none;
+            box-shadow: none;
+            border: none;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.02em;
+        }
+
+        .tagline {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        textarea,
+        input {
+            width: 100%;
+            font-family: inherit;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        textarea:focus,
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(95, 242, 200, 0.18);
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: none;
+            flex: 1;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #0c161f;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            font-weight: 600;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease;
+            box-shadow: 0 10px 24px rgba(90, 210, 190, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            box-shadow: none;
+        }
+
+        .ghost:hover {
+            color: var(--text);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .result-board {
+            display: grid;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .result-card {
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .result-card .url {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 6px;
+            word-break: break-all;
+        }
+
+        .status {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--muted);
+            padding: 30px 10px;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="frame">
+        <div class="header">
+            <h1>Link Scraper Console</h1>
+        </div>
+
+        <div class="panel">
+            <label for="links">크롤링할 링크들 (줄바꿈으로 구분)</label>
+            <textarea id="links" placeholder="https://example.com/page-1&#10;https://example.com/page-2"></textarea>
+            <div class="controls">
+                <button id="run">크롤링 시작</button>
+                <button class="ghost" id="clear">초기화</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <label>결과</label>
+            <div id="results" class="result-board">
+                <div class="empty-state">링크를 입력하고 크롤링을 시작하면 여기에 결과가 표시됩니다.</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/js/app.js"></script>
+</body>
+
+</html>
