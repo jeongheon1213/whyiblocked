@@ -8,6 +8,8 @@ export default function createWindow() {
         height: 800,
         minWidth: 1200,
         minHeight: 800,
+        maxWidth: 1200,
+        maxHeight: 800,
         webPreferences: {
             preload: path.join(ROOT_PATH, 'src/preload/preload.js'),
         },

@@ -18,21 +18,40 @@ async function crawl(url, browser) {
 
     const title = await page.title();
     const content = await page.evaluate(() => {
-        // const elements = document.querySelectorAll('div > p');
-        // return Array.from(elements).map((el) => el.innerText.trim());
+        const heads = document.querySelectorAll('.article-head');
 
-        const imgs = document.querySelectorAll('.fr-view.article-content img');
-        return Array.from(imgs)
-            .map((el) => el.getAttribute('src'))
-            .filter((src) => src && src.trim() !== '');
+        return Array.from(heads)
+            .map((head) => {
+                const titleEl = head.querySelector('.title');
+                const titleLinkEl = titleEl?.closest('a') || titleEl?.querySelector('a') || titleEl;
+                const userEl = head.querySelector('.user-info a');
+                const timeEl = head.querySelector('time');
 
-        // return document.body.innerHTML; // body 전체 텍스트
-        // return document.body; // body 전체 텍스트
+                const titleText = titleEl?.textContent?.trim() || '';
+                const titleHref = titleLinkEl?.getAttribute('href')?.trim() || '';
+                const userText = userEl?.textContent?.trim() || '';
+                const userHref = userEl?.getAttribute('href')?.trim() || '';
+                const timeValue = timeEl?.textContent?.trim() || '';
+
+                return {
+                    title: titleText,
+                    titleHref,
+                    author: userText,
+                    authorHref: userHref,
+                    time: timeValue,
+                };
+            })
+            .filter((item) => item.title || item.author || item.authorHref || item.time);
     });
+
+    const pageUrl = page.url() || url;
 
     await page.close();
 
-    return content;
+    return content.map((item) => ({
+        ...item,
+        titleHref: item.titleHref || pageUrl || url,
+    }));
 }
 
 export { crawl };
