@@ -13,7 +13,12 @@ export default function createWindow() {
         webPreferences: {
             preload: path.join(ROOT_PATH, 'src/preload/preload.js'),
         },
+        autoHideMenuBar: true, // ALT키 누르면만 표시
     });
 
     win.loadFile(path.join(ROOT_PATH, 'src/views/app/app.html'));
+    // win.setMenuBarVisibility(false);
+    win.setMenu(null);
+
+    return win;
 }

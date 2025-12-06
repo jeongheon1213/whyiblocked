@@ -15,7 +15,7 @@
             <div class="panel-heading">
                 <div>
                     <div class="label">대상 URL</div>
-                    <div class="hint">크롤러가 접근 가능한 모든 공개 페이지에서 작동합니다.</div>
+                    <!-- <div class="hint">Enter one per line and they will be crawled in order.</div> -->
                 </div>
                 <button id="btn" class="primary" type="button">요소 가져오기</button>
             </div>
@@ -35,7 +35,10 @@
                 </div>
                 <button id="copy-btn" class="ghost" type="button">복사</button>
             </div>
-            <pre id="output" class="code-block">출력 대기 중...</pre>
+            <div class="output-wrapper">
+                <div id="spinner" class="spinner" aria-hidden="true"></div>
+                <pre id="output" class="code-block">출력 대기 중...</pre>
+            </div>
         </section>
     </div>
 
